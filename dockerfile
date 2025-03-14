@@ -1,8 +1,9 @@
 # Usa un'immagine di base ufficiale di Node.js
 FROM node:14
 
-# Installa gulp-cli globalmente
-RUN npm install -g gulp-cli
+# Installa Python e node-gyp
+RUN apt-get update && apt-get install -y python3 python3-pip
+RUN npm install -g node-gyp gulp-cli
 
 # Imposta la directory di lavoro
 WORKDIR /app
