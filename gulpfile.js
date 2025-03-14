@@ -7,9 +7,9 @@ const concat        = require('gulp-concat');
 const cleanCSS      = require('gulp-clean-css');
 const imageMin      = require('gulp-imagemin');
 const pngQuint      = require('imagemin-pngquant'); 
+const mozjpeg       = require('imagemin-mozjpeg');
 const browserSync   = require('browser-sync').create();
 const autoprefixer  = require('gulp-autoprefixer');
-const jpgRecompress = require('imagemin-jpeg-recompress'); 
 const clean         = require('gulp-clean');
 
 // Paths
@@ -68,11 +68,10 @@ gulp.task('img', function(){
     return gulp.src(paths.src.imgs)
     .pipe(imageMin([
         imageMin.gifsicle(),
-        imageMin.jpegtran(),
         imageMin.optipng(),
         imageMin.svgo(),
         pngQuint(),
-        jpgRecompress()
+        mozjpeg()
     ]))
     .pipe(gulp.dest(paths.dist.imgs));
 });
