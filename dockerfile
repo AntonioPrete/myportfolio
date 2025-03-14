@@ -1,6 +1,9 @@
 # Usa un'immagine di base ufficiale di Node.js
 FROM node:14
 
+# Installa gulp-cli globalmente
+RUN npm install -g gulp-cli
+
 # Imposta la directory di lavoro
 WORKDIR /app
 
