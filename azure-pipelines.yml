@@ -1,0 +1,28 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: Docker@2
+  inputs:
+    command: 'login'
+    containerRegistry: 'dockerRegistryServiceConnection'
+
+- task: Docker@2
+  inputs:
+    command: 'buildAndPush'
+    repository: 'prete88/myportfolio'
+    dockerfile: '**/Dockerfile'
+    containerRegistry: 'dockerRegistryServiceConnection'
+    tags: |
+      $(Build.BuildId)
+
+- script: |
+    minikube start
+    kubectl config use-context minikube
+    kubectl apply -f deployment.yaml --validate=false
+  displayName: 'Deploy to Kubernetes'
