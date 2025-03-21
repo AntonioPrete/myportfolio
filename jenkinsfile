@@ -1,0 +1,23 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    // Costruisci l'immagine Docker
+                    sh 'docker build -t myportfolio:latest .'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    // Ferma e rimuovi il container esistente
+                    sh 'docker stop myportfolio || true && docker rm myportfolio || true'
+                    // Avvia un nuovo container con l'immagine aggiornata
+                    sh 'docker run -d --name myportfolio -p 8080:80 myportfolio:latest'
+                }
+            }
+        }
+    }
+}
