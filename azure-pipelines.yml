@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
   branches:
     include:
@@ -15,14 +10,14 @@ steps:
 - task: Docker@2
   inputs:
     command: 'buildAndPush'
-    repository: 'myportfolio'
+    repository: 'myapp'
     dockerfile: '**/Dockerfile'
-    containerRegistry: '$(dockerRegistryServiceConnection)'
+    containerRegistry: 'dockerRegistryServiceConnection'
     tags: |
       $(Build.BuildId)
 
 - script: |
-    docker stop myportfolio || true
-    docker rm myportfolio || true
-    docker run -d --name myportfolio -p 8080:80 myportfolio:$(Build.BuildId)
+    docker stop myapp || true
+    docker rm myapp || true
+    docker run -d --name myapp -p 8080:80 myapp:$(Build.BuildId)
   displayName: 'Deploy Docker container'
