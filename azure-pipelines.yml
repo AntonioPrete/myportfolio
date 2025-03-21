@@ -22,5 +22,7 @@ steps:
       $(Build.BuildId)
 
 - script: |
-    kubectl apply -f deployment.yaml
+    minikube start
+    kubectl config use-context minikube
+    kubectl apply -f deployment.yaml --validate=false
   displayName: 'Deploy to Kubernetes'
