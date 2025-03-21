@@ -10,14 +10,12 @@ steps:
 - task: Docker@2
   inputs:
     command: 'buildAndPush'
-    repository: 'myapp'
+    repository: 'prete88/myportfolio'
     dockerfile: '**/Dockerfile'
     containerRegistry: 'dockerRegistryServiceConnection'
     tags: |
       $(Build.BuildId)
 
 - script: |
-    docker stop myapp || true
-    docker rm myapp || true
-    docker run -d --name myapp -p 8080:80 myapp:$(Build.BuildId)
-  displayName: 'Deploy Docker container'
+    kubectl apply -f deployment.yaml
+  displayName: 'Deploy to Kubernetes'
