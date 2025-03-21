@@ -9,6 +9,11 @@ pool:
 steps:
 - task: Docker@2
   inputs:
+    command: 'login'
+    containerRegistry: 'dockerRegistryServiceConnection'
+
+- task: Docker@2
+  inputs:
     command: 'buildAndPush'
     repository: 'prete88/myportfolio'
     dockerfile: '**/Dockerfile'
